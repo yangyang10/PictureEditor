@@ -1,4 +1,4 @@
-package com.vachel.editing.emoji;
+package com.vachel.editor.emoji;
 
 public interface IEmojiCallback {
     void onEmojiClick(String emoji);

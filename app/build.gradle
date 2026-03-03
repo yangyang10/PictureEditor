@@ -3,14 +3,13 @@ plugins {
 }
 
 android {
+    compileSdk rootProject.ext.compileSdk
     namespace 'com.vachel.editing'
-    compileSdkVersion 33
-    buildToolsVersion "32.0.0"
 
     defaultConfig {
         applicationId "com.vachel.editing"
-        minSdkVersion 23
-        targetSdkVersion 30
+        minSdk rootProject.ext.minSdk
+        targetSdk rootProject.ext.targetSdk
         versionCode 1
         versionName "1.0"
 
@@ -33,6 +32,5 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    api 'com.astuetz:pagerslidingtabstrip:1.0.1'
     implementation project(':editor')
 }

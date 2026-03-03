@@ -1,4 +1,4 @@
-package com.vachel.editing.emoji;
+package com.vachel.editor.emoji;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -21,7 +21,7 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.astuetz.PagerSlidingTabStrip;
-import com.vachel.editing.R;
+import com.vachel.editor.R;
 
 
 public class EmojiDrawer extends LinearLayout {

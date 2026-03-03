@@ -4,9 +4,9 @@ import android.graphics.Color;
 import android.view.View;
 import android.widget.Toast;
 
-import com.vachel.editing.emoji.Emoji;
-import com.vachel.editing.emoji.EmojiDrawer;
-import com.vachel.editing.emoji.IEmojiCallback;
+import com.vachel.editor.emoji.Emoji;
+import com.vachel.editor.emoji.EmojiDrawer;
+import com.vachel.editor.emoji.IEmojiCallback;
 import com.vachel.editor.bean.StickerText;
 import com.vachel.editor.PictureEditActivity;
 import com.vachel.editor.util.Utils;

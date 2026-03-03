@@ -11,4 +11,7 @@
     <color name="image_color_yellow">#FFCC00</color>
     <color name="image_color_blue">#6687FF</color>
     <color name="image_color_purple">#8B00FF</color>
+
+    <color name="emoji_tab_indicator">#66ffffff</color>
+    <color name="emoji_tab_underline">#11ffffff</color>
 </resources>

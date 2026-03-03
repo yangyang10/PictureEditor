@@ -1,0 +1,13 @@
+ext {
+
+    //版本号
+    versionCode = 144
+    //版本名
+    versionName = "3.0.52"
+
+    // SDK and tools
+    minSdk = 24
+    targetSdk = 35
+    compileSdk = 35
+    flavorDimensions = 'default'
+}
