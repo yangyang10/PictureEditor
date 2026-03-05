@@ -23,7 +23,7 @@ import com.vachel.editor.bean.StickerText;
 public class TextEditDialog extends Dialog implements View.OnClickListener,
         RadioGroup.OnCheckedChangeListener, View.OnTouchListener {
 
-    private EditText mEditText;
+    private StrokeEditText mEditText;
 
     private final ITextChangedListener mTextListener;
 
@@ -32,6 +32,7 @@ public class TextEditDialog extends Dialog implements View.OnClickListener,
     private ColorGroup mColorGroup;
     private View mEnableDrawBg;
     private int mCurrentColor;
+    private int mStrokeColor;
 
     public TextEditDialog(Context context, ITextChangedListener ITextChangedListener) {
         super(context, R.style.TextEditDialog);
@@ -71,6 +72,10 @@ public class TextEditDialog extends Dialog implements View.OnClickListener,
     }
 
     private void enableDrawBg(boolean enable) {
+        //1、默认没有描边
+        //2、点一次变更成 颜色改变底色，文字变白色
+        //3、再点一点变成描边
+        //4、再次点击变成没有描边
         GradientDrawable myGrad = (GradientDrawable) mEditText.getBackground();
         if (enable) {
             boolean isWhite = mCurrentColor == Color.WHITE;
