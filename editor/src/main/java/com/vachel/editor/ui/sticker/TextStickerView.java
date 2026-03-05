@@ -9,15 +9,16 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.vachel.editor.bean.StickerText;
+import com.vachel.editor.ui.widget.StrokeTextView;
 import com.vachel.editor.ui.widget.TextEditDialog;
 import com.vachel.editor.util.Utils;
 
 public class TextStickerView extends StickerView implements TextEditDialog.ITextChangedListener {
     private static final int PADDING = 26;
     private static final int PADDING_BG = 20;
-    private static final float TEXT_SIZE_SP = 30f;
+    private static final float TEXT_SIZE_SP = 26f;
 
-    private TextView mTextView;
+    private StrokeTextView mTextView;
     private StickerText mText;
     private TextEditDialog mDialog;
     private boolean mAllowEditText = true;
@@ -36,7 +37,7 @@ public class TextStickerView extends StickerView implements TextEditDialog.IText
 
     @Override
     public View onCreateContentView(Context context) {
-        mTextView = new TextView(context);
+        mTextView = new StrokeTextView(context);
         mTextView.setTextSize(TEXT_SIZE_SP);
         mTextView.setPadding(PADDING, PADDING, PADDING, PADDING);
         mTextView.setTextColor(Color.WHITE);
@@ -78,16 +79,27 @@ public class TextStickerView extends StickerView implements TextEditDialog.IText
         if (mText != null && mTextView != null) {
             mTextView.setText(mText.getText());
             GradientDrawable myGrad = (GradientDrawable) mTextView.getBackground();
-            if (mText.isDrawBackground()) {
-                int color = text.getColor();
-                boolean isWhite = color == Color.WHITE;
-                mTextView.setTextColor(isWhite ? Color.BLACK : Color.WHITE);
-                myGrad.setColor(text.getColor());
-                setPadding(PADDING_BG, PADDING_BG, PADDING_BG, PADDING_BG);
-            } else {
-                mTextView.setTextColor(text.getColor());
-                myGrad.setColor(Color.TRANSPARENT);
-                setPadding(0, 0, 0, 0);
+            switch (text.getFontState()) {
+                case TextEditDialog.FONT_STATE_BG:
+                    mTextView.setStrokeEnabled(false);
+                    int color = text.getColor();
+                    boolean isWhite = color == Color.WHITE;
+                    mTextView.setTextColor(isWhite ? Color.BLACK : Color.WHITE);
+                    myGrad.setColor(text.getColor());
+                    setPadding(PADDING_BG, PADDING_BG, PADDING_BG, PADDING_BG);
+                    break;
+                case TextEditDialog.FONT_STATE_OUTLINE:
+                    mTextView.setTextColor(text.getColor());
+                    mTextView.setStrokeEnabledAndColor(true,text.getStrokeColor());
+                    myGrad.setColor(Color.TRANSPARENT);
+                    setPadding(0, 0, 0, 0);
+                    break;
+                default:
+                    mTextView.setStrokeEnabled(false);
+                    mTextView.setTextColor(text.getColor());
+                    myGrad.setColor(Color.TRANSPARENT);
+                    setPadding(0, 0, 0, 0);
+                    break;
             }
         }
     }

@@ -7,20 +7,19 @@ import android.text.TextUtils;
  */
 
 public class StickerText {
-    private boolean drawBackground;
 
     private String text;
 
     private int color;
 
-    public StickerText(String text, int color) {
-        this(text, color, false);
-    }
+    private int strokeColor;//描边颜色
+    private int fontState;//字体状态
 
-    public StickerText(String text, int color, boolean drawBackground) {
+    public StickerText(String text, int color, int strokeColor,int fontState) {
         this.text = text;
         this.color = color;
-        this.drawBackground = drawBackground;
+        this.strokeColor = strokeColor;
+        this.fontState = fontState;
     }
 
     public String getText() {
@@ -39,19 +38,27 @@ public class StickerText {
         this.color = color;
     }
 
-    public boolean isDrawBackground() {
-        return drawBackground;
-    }
-
-    public void setDrawBackground(boolean drawBackground) {
-        this.drawBackground = drawBackground;
-    }
-
     public boolean isEmpty() {
         return TextUtils.isEmpty(text);
     }
 
     public int length() {
         return isEmpty() ? 0 : text.length();
+    }
+
+    public int getStrokeColor() {
+        return strokeColor;
+    }
+
+    public void setStrokeColor(int strokeColor) {
+        this.strokeColor = strokeColor;
+    }
+
+    public int getFontState() {
+        return fontState;
+    }
+
+    public void setFontState(int fontState) {
+        this.fontState = fontState;
     }
 }

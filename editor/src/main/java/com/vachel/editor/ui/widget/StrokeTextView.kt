@@ -45,6 +45,14 @@ class StrokeTextView @JvmOverloads constructor(
         invalidate()
     }
 
+    fun setStrokeEnabledAndColor(enabled: Boolean,color: Int) {
+        strokeColor = color
+        strokePaint.color = color
+
+        strokeEnabled = enabled
+        invalidate()
+    }
+
     fun setStrokeEnabled(enabled: Boolean) {
         strokeEnabled = enabled
         invalidate()

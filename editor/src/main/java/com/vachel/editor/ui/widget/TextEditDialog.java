@@ -122,14 +122,14 @@ public class TextEditDialog extends Dialog implements View.OnClickListener,
             if (!mDefaultText.isEmpty()) {
                 mEditText.setSelection(mEditText.length());
             }
-            mEnableDrawBg.setSelected(mDefaultText.isDrawBackground());
+//            mEnableDrawBg.setSelected(mDefaultText.isDrawBackground());
             enableDrawBg(mBgState);
             mDefaultText = null;
         } else {
             mEditText.setText("");
             mCurrentColor = mColorGroup.getCheckColor();
             mStrokeColor = (mCurrentColor & 0x00FFFFFF) | 0x99000000;
-            mEnableDrawBg.setSelected(false);
+//            mEnableDrawBg.setSelected(false);
             enableDrawBg(mBgState);
             showKeyboard();
         }
@@ -146,10 +146,6 @@ public class TextEditDialog extends Dialog implements View.OnClickListener,
 
     public void setText(StickerText text) {
         mDefaultText = text;
-    }
-
-    public void reset() {
-        setText(new StickerText(null, Color.WHITE));
     }
 
     @Override
@@ -173,7 +169,7 @@ public class TextEditDialog extends Dialog implements View.OnClickListener,
     private void onDone() {
         String text = mEditText.getText().toString();
         if (!TextUtils.isEmpty(text) && mTextListener != null) {
-            mTextListener.onText(new StickerText(text, mCurrentColor, mEnableDrawBg.isSelected()), true);
+            mTextListener.onText(new StickerText(text, mCurrentColor, mStrokeColor,mBgState), true);
         }
         dismiss();
     }

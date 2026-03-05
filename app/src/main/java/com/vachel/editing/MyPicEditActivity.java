@@ -25,7 +25,7 @@ public class MyPicEditActivity extends PictureEditActivity implements IEmojiCall
 
     @Override
     public void onEmojiClick(String emoji) {
-        StickerText stickerText = new StickerText(emoji, Color.WHITE);
+        StickerText stickerText = new StickerText(emoji, Color.WHITE,Color.WHITE,0);
         onText(stickerText, false); // emoji其实也是text文本
         Utils.dismissDialog(mStickerImageDialog);
     }
