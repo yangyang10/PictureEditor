@@ -23,6 +23,10 @@ import com.vachel.editor.bean.StickerText;
 public class TextEditDialog extends Dialog implements View.OnClickListener,
         RadioGroup.OnCheckedChangeListener, View.OnTouchListener {
 
+    public final static int FONT_STATE_NORMAL = 0;
+    public final static int FONT_STATE_BG = 1;
+    public final static int FONT_STATE_OUTLINE = 2;
+
     private StrokeEditText mEditText;
 
     private final ITextChangedListener mTextListener;
@@ -33,6 +37,7 @@ public class TextEditDialog extends Dialog implements View.OnClickListener,
     private View mEnableDrawBg;
     private int mCurrentColor;
     private int mStrokeColor;
+    private int mBgState = 0; // 0:常规, 1:背景变更, 2:描边
 
     public TextEditDialog(Context context, ITextChangedListener ITextChangedListener) {
         super(context, R.style.TextEditDialog);
@@ -71,19 +76,29 @@ public class TextEditDialog extends Dialog implements View.OnClickListener,
         findViewById(R.id.root_dialog).setOnTouchListener(this);
     }
 
-    private void enableDrawBg(boolean enable) {
+    private void enableDrawBg(int state) {
         //1、默认没有描边
         //2、点一次变更成 颜色改变底色，文字变白色
         //3、再点一点变成描边
         //4、再次点击变成没有描边
         GradientDrawable myGrad = (GradientDrawable) mEditText.getBackground();
-        if (enable) {
-            boolean isWhite = mCurrentColor == Color.WHITE;
-            mEditText.setTextColor(isWhite ? Color.BLACK : Color.WHITE);
-            myGrad.setColor(mCurrentColor);
-        } else {
-            mEditText.setTextColor(mCurrentColor);
-            myGrad.setColor(Color.TRANSPARENT);
+        switch (state) {
+            case FONT_STATE_BG:
+                mEditText.setStrokeEnabled(false);
+                boolean isWhite = mCurrentColor == Color.WHITE;
+                mEditText.setTextColor(isWhite ? Color.BLACK : Color.WHITE);
+                myGrad.setColor(mCurrentColor);
+                break;
+            case FONT_STATE_OUTLINE:
+                mEditText.setTextColor(mCurrentColor);
+                mEditText.setStrokeEnabledAndColor(true,mStrokeColor);
+                myGrad.setColor(Color.TRANSPARENT);
+                break;
+            default:
+                mEditText.setStrokeEnabled(false);
+                mEditText.setTextColor(mCurrentColor);
+                myGrad.setColor(Color.TRANSPARENT);
+                break;
         }
     }
 
@@ -93,17 +108,19 @@ public class TextEditDialog extends Dialog implements View.OnClickListener,
         if (mDefaultText != null) {
             mEditText.setText(mDefaultText.getText());
             mCurrentColor = mDefaultText.getColor();
+            mStrokeColor = (mCurrentColor & 0x00FFFFFF) | 0x99000000;
             if (!mDefaultText.isEmpty()) {
                 mEditText.setSelection(mEditText.length());
             }
             mEnableDrawBg.setSelected(mDefaultText.isDrawBackground());
-            enableDrawBg(mDefaultText.isDrawBackground());
+            enableDrawBg(mBgState);
             mDefaultText = null;
         } else {
             mEditText.setText("");
             mCurrentColor = mColorGroup.getCheckColor();
+            mStrokeColor = (mCurrentColor & 0x00FFFFFF) | 0x99000000;
             mEnableDrawBg.setSelected(false);
-            enableDrawBg(false);
+            enableDrawBg(mBgState);
             showKeyboard();
         }
         mColorGroup.setCheckColor(mEditText.getCurrentTextColor());
@@ -133,9 +150,13 @@ public class TextEditDialog extends Dialog implements View.OnClickListener,
         } else if (vid == R.id.tv_cancel) {
             dismiss();
         } else if (vid == R.id.enable_bg_btn) {
+            mBgState++;
+            if (mBgState > 2) {
+                mBgState = 0;
+            }
             boolean enable = !v.isSelected();
             v.setSelected(enable);
-            enableDrawBg(enable);
+            enableDrawBg(mBgState);
         }
     }
 
@@ -150,7 +171,8 @@ public class TextEditDialog extends Dialog implements View.OnClickListener,
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
         mCurrentColor = mColorGroup.getCheckColor();
-        enableDrawBg(mEnableDrawBg.isSelected());
+        mStrokeColor = (mCurrentColor & 0x00FFFFFF) | 0x99000000;
+        enableDrawBg(mBgState);
     }
 
     @Override

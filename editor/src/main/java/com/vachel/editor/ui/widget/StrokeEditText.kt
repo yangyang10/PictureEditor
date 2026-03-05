@@ -50,6 +50,14 @@ class StrokeEditText @JvmOverloads constructor(
         invalidate()
     }
 
+    fun setStrokeEnabledAndColor(enabled: Boolean,color: Int) {
+        strokeColor = color
+        strokePaint.color = color
+
+        strokeEnabled = enabled
+        invalidate()
+    }
+
     override fun onDraw(canvas: Canvas) {
         if (!strokeEnabled || text.isNullOrEmpty()) {
             super.onDraw(canvas)
