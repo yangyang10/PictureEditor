@@ -5,7 +5,6 @@
     <application>
         <activity android:name=".PictureEditActivity"
             android:theme="@style/EditTheme"
-            android:windowSoftInputMode="stateAlwaysHidden"
             android:exported="false"/>
 
     </application>

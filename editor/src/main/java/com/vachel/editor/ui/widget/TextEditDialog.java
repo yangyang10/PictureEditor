@@ -6,9 +6,12 @@ import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -43,9 +46,15 @@ public class TextEditDialog extends Dialog implements View.OnClickListener,
         super(context, R.style.TextEditDialog);
         setContentView(R.layout.edit_text_dialog);
         mTextListener = ITextChangedListener;
+
         Window window = getWindow();
         if (window != null) {
-            window.setLayout(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+            window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+
+            WindowManager.LayoutParams params = window.getAttributes();
+            params.width = WindowManager.LayoutParams.MATCH_PARENT;
+            params.height = WindowManager.LayoutParams.MATCH_PARENT;
+            window.setAttributes(params);
         }
     }
 
@@ -105,6 +114,7 @@ public class TextEditDialog extends Dialog implements View.OnClickListener,
     @Override
     protected void onStart() {
         super.onStart();
+
         if (mDefaultText != null) {
             mEditText.setText(mDefaultText.getText());
             mCurrentColor = mDefaultText.getColor();
@@ -171,6 +181,7 @@ public class TextEditDialog extends Dialog implements View.OnClickListener,
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
         mCurrentColor = mColorGroup.getCheckColor();
+        //mCurrentColor 60%透明度
         mStrokeColor = (mCurrentColor & 0x00FFFFFF) | 0x99000000;
         enableDrawBg(mBgState);
     }
