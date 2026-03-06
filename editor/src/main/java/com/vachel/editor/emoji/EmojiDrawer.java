@@ -20,8 +20,8 @@ import android.widget.LinearLayout;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import com.astuetz.PagerSlidingTabStrip;
 import com.vachel.editor.R;
+import com.vachel.editor.astuetz.PagerSlidingTabStrip;
 
 
 public class EmojiDrawer extends LinearLayout {
