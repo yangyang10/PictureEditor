@@ -11,6 +11,7 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
+import android.net.Uri;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
@@ -286,8 +287,9 @@ public class PictureEditView extends FrameLayout implements Runnable, ScaleGestu
         }
     }
 
-    public void addStickerImage() {
+    public void addStickerImage(Uri uri) {
         ImageStickerView imageView = new ImageStickerView(getContext());
+        imageView.setImageFromUri(uri);
         LayoutParams layoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         layoutParams.gravity = Gravity.CENTER;
         imageView.setX(getScrollX());

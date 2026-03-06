@@ -29,7 +29,7 @@ import com.vachel.editor.R;
 
 /**
  * Created by HHY on 2026/3/6 10:40
- * Desc:
+ * Desc: https://github.com/astuetz/PagerSlidingTabStrip
  **/
 public class PagerSlidingTabStrip extends HorizontalScrollView {
 

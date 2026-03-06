@@ -3,6 +3,7 @@ package com.vachel.editing;
 import android.app.Application;
 import android.graphics.Color;
 
+import com.liulishuo.filedownloader.FileDownloader;
 import com.vachel.editor.PictureEditor;
 import com.vachel.editor.util.Utils;
 
@@ -20,7 +21,8 @@ public class MyApplication extends Application {
 //                .setDefaultCheckColor(Color.BLUE)
                 .setClipRectMarginBottom(Utils.dip2px(this, 44))
                 .setClipRectMarginNormal(Utils.dip2px(this, 16));
-        ;
+
+        FileDownloader.setupOnApplicationOnCreate(this);
     }
 
 }

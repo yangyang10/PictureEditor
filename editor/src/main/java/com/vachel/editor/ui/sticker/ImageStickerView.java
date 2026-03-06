@@ -1,6 +1,7 @@
 package com.vachel.editor.ui.sticker;
 
 import android.content.Context;
+import android.net.Uri;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
@@ -37,5 +38,13 @@ public class ImageStickerView extends StickerView {
     public void setImage(@DrawableRes int image){
         mImageResource = image;
         mImageView.setImageResource(image);
+    }
+
+    public void setImageFromUri(Uri uri) {
+        mImageView.setImageURI(uri);
+    }
+
+    public void setImagePath(String path) {
+        mImageView.setImageURI(Uri.parse(path));
     }
 }
